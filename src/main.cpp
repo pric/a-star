@@ -6,12 +6,10 @@
 
 using namespace std;
 
-int main() {
+int main(int argc, char* argv[]) {
 
-    Map* map = Utils::fileToMap("/Users/Philippe/Workspace/save-the-princess/sample_input.txt");
+    Map* map = Utils::fileToMap(argv[1]);
     PathFinder pathFinder = PathFinder(map);
-
-    map->print();
 
     pathFinder.AStar(map->getStartPosition(), map->getGoalPosition());
     pathFinder.renderSolution();

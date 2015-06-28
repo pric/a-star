@@ -41,7 +41,6 @@ public:
     Node* getStartPosition();
     Node* getGoalPosition();
     Node* get(short index);
-    Node* get(short x, short y);
     vector<Node*> getNeighbours(short position);
     void print();
 

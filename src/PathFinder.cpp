@@ -76,7 +76,7 @@ void PathFinder::AStar(Node* start, Node* end) {
     openList.push_back(start);
     start->opened = true;
 
-    while ((iterationCount == 0 || (current != end)) && iterationCount<1000 ) {
+    while ((iterationCount == 0 || (current != end)) && iterationCount < pow(gameMap->getSize(),2)) {
 
         for (i = openList.begin(); i != openList.end(); ++ i) {
 
