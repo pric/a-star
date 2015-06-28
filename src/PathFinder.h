@@ -1,7 +1,3 @@
-//
-// Created by Philippe Richard on 15-06-06.
-//
-
 #ifndef SAVE_THE_PRINCESS_PATHFINDER_H
 #define SAVE_THE_PRINCESS_PATHFINDER_H
 
@@ -9,10 +5,13 @@
 
 class PathFinder {
 
+    Map* gameMap;
+
+    short getHeuristic(short first, short second);
 
 public:
-    PathFinder();
-    void AStar();
+    PathFinder(Map* map);
+    void AStar(short start, short end);
 
 };
 

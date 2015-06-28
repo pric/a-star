@@ -5,6 +5,7 @@
 #include <sstream>
 #include <iostream>
 #include <fstream>
+#include <list>
 #include "Map.h"
 
 class Utils {
