@@ -13,6 +13,9 @@ int main() {
 
     map->print();
 
+    pathFinder.AStar(map->getStartPosition(), map->getGoalPosition());
+    pathFinder.renderSolution();
+
 
     return 0;
 }

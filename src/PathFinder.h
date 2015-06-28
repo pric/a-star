@@ -6,12 +6,15 @@
 class PathFinder {
 
     Map* gameMap;
+    Node* endPoint;
+    bool solutionFound;
 
-    short getHeuristic(short first, short second);
+    int getHeuristic(Node* first, Node* second);
 
 public:
     PathFinder(Map* map);
-    void AStar(short start, short end);
+    void AStar(Node* start, Node* end);
+    void renderSolution();
 
 };
 

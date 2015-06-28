@@ -1,4 +1,12 @@
-3
----
--m-
-px-
+11
+xxxxx---xxx
+------x-x--
+---xxxx--x-
+--x----x--x
+-x--xx--x-x
+-x-x-mx-x-x
+-x-x-x--x-x
+-x-x---x--x
+-x--xxx--x-
+--x-----x--
+p--xxxxx---

@@ -11,6 +11,8 @@ void Map::push(short value){
     Node* node = new Node;
     node->position = (short)this->map.size();
     node->value = value;
+    node->closed = false;
+    node->opened = false;
 
     if (value == Tiles::START) {
 
@@ -45,14 +47,9 @@ Node* Map::get(short index) {
     return this->map.at(index);
 }
 
-Node* Map::get(short x, short y) {
-
-    return this->map.at(this->size*x + y);
-}
-
 bool Map::isAvailable(short index) {
 
-    return get(index)->value == Tiles::NOTHING;
+    return get(index)->value != Tiles::OBSTACLE;
 }
 
 vector<Node*> Map::getNeighbours(short position) {
@@ -95,7 +92,7 @@ void Map::print() {
 
     for (int i = 0; i < pow(this->size,2); ++i) {
 
-        std::cout << (char)this->get(i)->value << ", ";
+        std::cout << (char)this->get(i)->value << "(" << this->get(i)->position << "), ";
 
         if ((i+1)%this->size == 0){
             std::cout << endl;

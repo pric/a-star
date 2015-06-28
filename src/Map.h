@@ -16,6 +16,12 @@ enum Tiles {
 struct Node {
     short position;
     short value;
+    bool opened;
+    bool closed;
+    int fScore;
+    int gScore;
+    int hScore;
+    Node* parent;
 };
 
 class Map {
