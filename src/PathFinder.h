@@ -3,6 +3,11 @@
 
 #include "Grid.h"
 
+static const char* DIRECTION_UP = "UP";
+static const char* DIRECTION_DOWN = "DOWN";
+static const char* DIRECTION_LEFT = "LEFT";
+static const char* DIRECTION_RIGHT = "RIGHT";
+
 class PathFinder {
 
     Grid* m_grid;

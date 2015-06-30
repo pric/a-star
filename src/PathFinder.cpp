@@ -46,20 +46,20 @@ void PathFinder::getInstructions(){
 
         while (current->parent != nullptr) {
 
-            unsigned int diff = current->parent->position - current->position;
+            int diff = current->parent->position - current->position;
 
             if(diff == 1){
 
-                directives.push("LEFT");
+                directives.push(DIRECTION_LEFT);
             } else if (diff == -1){
 
-                directives.push("RIGHT");
+                directives.push(DIRECTION_RIGHT);
             } else if (diff == m_grid->getSize()) {
 
-                directives.push("UP");
+                directives.push(DIRECTION_UP);
             } else if (diff == -m_grid->getSize()) {
 
-                directives.push("DOWN");
+                directives.push(DIRECTION_DOWN);
             }
 
             current = current->parent;
