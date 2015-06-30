@@ -1,26 +1,25 @@
+#include <fstream>
 #include "Utils.h"
 
-using namespace std;
-
-Map* Utils::fileToMap(string fileName) {
+Grid* Utils::fileToGrid(const std::string& fileName) {
 
     char ch;
-    Map* map;
-    fstream fin(fileName, fstream::in);
+    Grid* grid;
+    std::fstream fin(fileName, std::fstream::in);
 
-    string firstLine;
+    std::string firstLine;
 
     getline(fin, firstLine);
 
-    map = new Map(atoi(firstLine.c_str()));
+    grid = new Grid(atoi(firstLine.c_str()));
 
-    while (fin >> noskipws >> ch) {
+    while (fin >> std::noskipws >> ch) {
 
         if(ch != '\n') {
 
-            map->push(ch);
+            grid->push(ch);
         }
     }
 
-    return map;
+    return grid;
 }

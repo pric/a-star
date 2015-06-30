@@ -1,19 +1,16 @@
 #include <iostream>
 
-#include "Map.h"
+#include "Grid.h"
 #include "Utils.h"
 #include "PathFinder.h"
 
-using namespace std;
-
 int main(int argc, char* argv[]) {
 
-    Map* map = Utils::fileToMap(argv[1]);
-    PathFinder pathFinder = PathFinder(map);
+    Grid* grid = Utils::fileToGrid(argv[1]);
+    PathFinder pathFinder = PathFinder(grid);
 
-    pathFinder.AStar(map->getStartPosition(), map->getGoalPosition());
-    pathFinder.renderSolution();
-
+    pathFinder.AStar(grid->getStartPosition(), grid->getGoalPosition());
+    pathFinder.getInstructions();
 
     return 0;
 }

@@ -1,20 +1,21 @@
 #ifndef SAVE_THE_PRINCESS_PATHFINDER_H
 #define SAVE_THE_PRINCESS_PATHFINDER_H
 
-#include "Map.h"
+#include "Grid.h"
 
 class PathFinder {
 
-    Map* gameMap;
-    Node* endPoint;
-    bool solutionFound;
+    Grid* m_grid;
+    Node* m_endPoint;
+    bool m_solutionFound;
 
-    int getHeuristic(Node* first, Node* second);
+    unsigned int getHeuristic(const Node* first, const Node* second);
 
 public:
-    PathFinder(Map* map);
+    PathFinder(Grid* grid);
     void AStar(Node* start, Node* end);
-    void renderSolution();
+    void getInstructions();
+    void drawSolution();
 
 };
 

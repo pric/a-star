@@ -1,37 +1,52 @@
 #include <list>
 #include <stack>
 #include <iostream>
+#include <vector>
 #include "PathFinder.h"
 
-using namespace std;
+PathFinder::PathFinder(Grid* grid) {
 
-PathFinder::PathFinder(Map* gameMap) {
-
-    this->gameMap = gameMap;
-    this->solutionFound = false;
+    m_grid = grid;
+    m_solutionFound = false;
 }
 
-int PathFinder::getHeuristic(Node* first, Node* second) {
+unsigned int PathFinder::getHeuristic(const Node* first, const Node* second) {
 
-    short mapSize = this->gameMap->getSize();
-    short first_x = (short)floor(first->position / mapSize);
-    short first_y = first->position % mapSize;
-    short second_x = (short)floor(second->position / mapSize);
-    short second_y = second->position / mapSize;
+    std::size_t gridSize = m_grid->getSize();
+    double first_x = floor(first->position / gridSize);
+    double first_y = first->position % gridSize;
+    double second_x = floor(second->position / gridSize);
+    double second_y = second->position / gridSize;
 
-    return (int)(sqrt(pow((second_x-first_x),2) + pow((second_y-first_y),2)) *10);
+    double delta_x = (second_x-first_x);
+    double delta_y = (second_y-first_y);
+
+    return static_cast<unsigned int>((sqrt(delta_x * delta_x + delta_y * delta_y) * 10));
 }
 
-void PathFinder::renderSolution(){
+void PathFinder::drawSolution(){
 
-    stack<string> directives;
-    Node* current;
+    Node* current = m_endPoint;
 
-    if (this->solutionFound){
+    while (current->parent != nullptr) {
+
+        m_grid->set(current->position, TILE_PATH);
+        current = current->parent;
+    }
+
+    m_grid->print();
+}
+
+void PathFinder::getInstructions(){
+
+    std::stack<std::string> directives;
+    Node* current = m_endPoint;
+
+    if (m_solutionFound){
 
         while (current->parent != nullptr) {
 
-            short diff = current->parent->position - current->position;
+            unsigned int diff = current->parent->position - current->position;
 
             if(diff == 1){
 
@@ -39,10 +54,10 @@ void PathFinder::renderSolution(){
             } else if (diff == -1){
 
                 directives.push("RIGHT");
-            } else if (diff == gameMap->getSize()) {
+            } else if (diff == m_grid->getSize()) {
 
                 directives.push("UP");
-            } else if (diff == -gameMap->getSize()) {
+            } else if (diff == -m_grid->getSize()) {
 
                 directives.push("DOWN");
             }
@@ -52,13 +67,13 @@ void PathFinder::renderSolution(){
 
         while (!directives.empty()){
 
-            cout << directives.top() << endl;
+            std::cout << directives.top() << std::endl;
             directives.pop();
         }
 
     } else {
 
-        cout << "No solution found" << endl;
+        std::cout << "No solution found" << std::endl;
     }
 
 }
@@ -67,16 +82,16 @@ void PathFinder::AStar(Node* start, Node* end) {
 
     Node* current;
 
-    list<Node*> openList;
-    list<Node*> closedList;
-    list<Node*>::iterator i;
+    std::list<Node*> openList;
+    std::list<Node*> closedList;
+    std::list<Node*>::iterator i;
 
     unsigned int iterationCount = 0;
 
     openList.push_back(start);
     start->opened = true;
 
-    while ((iterationCount == 0 || (current != end)) && iterationCount < pow(gameMap->getSize(),2)) {
+    while ((iterationCount == 0 || (current != end)) && iterationCount < pow(m_grid->getSize(),2)) {
 
         for (i = openList.begin(); i != openList.end(); ++ i) {
 
@@ -88,7 +103,7 @@ void PathFinder::AStar(Node* start, Node* end) {
 
         if (current == end) {
 
-            this->solutionFound = true;
+            m_solutionFound = true;
             break;
         }
 
@@ -98,9 +113,9 @@ void PathFinder::AStar(Node* start, Node* end) {
         current->opened = false;
         current->closed = true;
 
-        vector<Node*> neighbours = this->gameMap->getNeighbours(current->position);
+        std::vector<Node*> neighbours = m_grid->getNeighbours(current->position);
 
-        for ( Node* child : neighbours) {
+        for ( auto child : neighbours) {
 
             if (child->closed) {
 
@@ -113,7 +128,7 @@ void PathFinder::AStar(Node* start, Node* end) {
 
                     child->parent = current;
                     child->gScore = current->gScore + 10;
-                    child->hScore = this->getHeuristic(child, end);
+                    child->hScore = getHeuristic(child, end);
                     child->fScore = child->gScore + child->hScore;
                 }
 
@@ -123,7 +138,7 @@ void PathFinder::AStar(Node* start, Node* end) {
                 child->opened = true;
                 child->parent = current;
                 child->gScore = current->gScore + 10;
-                child->hScore = this->getHeuristic(child, end);
+                child->hScore = getHeuristic(child, end);
                 child->fScore = child->gScore + child->hScore;
             }
         }
@@ -131,5 +146,5 @@ void PathFinder::AStar(Node* start, Node* end) {
         ++iterationCount;
     }
 
-    this->endPoint = current;
+    m_endPoint = current;
 }
