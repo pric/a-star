@@ -2,6 +2,7 @@
 #include <stack>
 #include <iostream>
 #include <vector>
+#include <string>
 #include "PathFinder.h"
 
 PathFinder::PathFinder(Grid* grid) {
